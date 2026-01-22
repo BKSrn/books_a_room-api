@@ -1,8 +1,14 @@
 package com.api.books_a_room_api.dto;
 
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
-public record CriarUsuarioDTO(@NotNull String nome,
-                              @NotNull String email,
-                              @NotNull String senha ) {
-}
+public record CriarUsuarioDTO(
+        @NotNull(message = "Nome é obrigatório")
+        String nome,
+
+        @NotNull(message = "Email é obrigatório")
+        String email,
+
+        @NotNull(message = "Senha é obrigatória")
+        String senha
+) {}

@@ -23,31 +23,44 @@ public class UsuarioController {
         try {
             List<ResponseUsuarioDTO> usuarioDTOS = usuarioService.listarTodos();
             return ResponseEntity.ok(usuarioDTOS);
+
         }catch (Exception e){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(404).build();
         }
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Object> cadastroUsuario(@RequestBody CriarUsuarioDTO dto){
         try {
             usuarioService.criarUsuario(dto);
             return ResponseEntity.status(200).build();
+
         }catch (Exception e){
             return ResponseEntity.status(400).build();
         }
 
     }
 
-    @PutMapping
+    @PutMapping("/atualizar")
     public ResponseEntity<Object> atualizarUsuario(@RequestBody AtualizarUsuarioDTO dto){
         try {
             usuarioService.atualizarUsuario(dto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
+
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(400).build();
         }
 
     }
 
+    @DeleteMapping("/deletar/{idUsuario}")
+    public ResponseEntity<Object> deletarUsuario(@PathVariable Long idUsuario){
+        try {
+            usuarioService.deletarUsuario(idUsuario);
+            return ResponseEntity.status(200).build();
+
+        }catch (Exception e){
+            return ResponseEntity.status(404).build();
+        }
+    }
 }

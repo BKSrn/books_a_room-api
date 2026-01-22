@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -70,6 +71,9 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.getReferenceById(dto.id());
         Reserva reserva = reservaRepository.getReferenceById(dto.idReserva());
 
+        if (usuario == null){
+            throw new InputMismatchException("Nenhum usuario cadastrado");
+        }
         if (dto == null){
             throw  new RuntimeException("Informe os dados do usuario corretamente");
         }
@@ -91,7 +95,14 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
+    public void deletarUsuario(Long idUsuario) {
+        try {
+            usuarioRepository.deleteById(idUsuario);
+        }catch (NullPointerException e){
+            throw new NullPointerException("Nenhum usuario cadastrado com esse id");
+        }
 
+    }
 
     public boolean validarEmail(String email) {
         final Pattern EMAIL_PATTERN = Pattern.compile(
@@ -104,4 +115,5 @@ public class UsuarioService {
         if (email.isEmpty()) return false;
         return EMAIL_PATTERN.matcher(email).matches();
     }
+
 }

@@ -1,5 +1,6 @@
 package com.api.books_a_room_api.model;
 
+import com.api.books_a_room_api.dto.CriarReservaDTO;
 import com.api.books_a_room_api.model.enums.Status;
 import jakarta.persistence.*;
 
@@ -29,6 +30,14 @@ public class Reserva {
         setDataInicial(dataInicial);
         setDataFinal(dataFinal);
         this.status = Status.ATIVA;
+    }
+
+    public Reserva(CriarReservaDTO dto, Sala sala, Usuario usuario) {
+        this.sala = sala;
+        this.usuario = usuario;
+        this.status = Status.ATIVA;
+        setDataInicial(LocalDate.parse(dto.dataInicial()));
+        setDataFinal(LocalDate.parse(dto.dataFinal()));
     }
 
     public Status getStatus() {
