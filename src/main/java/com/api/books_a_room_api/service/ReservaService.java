@@ -11,6 +11,7 @@ import com.api.books_a_room_api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -32,6 +33,17 @@ public class ReservaService {
         Sala sala = salaRepository.getReferenceById(dto.idSala());
         Usuario usuario = usuarioRepository.getReferenceById(dto.idUsuario());
 
+        if (sala.getReserva() != null){
+            Reserva reserva = sala.getReserva();
+            if (reserva.getDataFinal().isAfter(LocalDate.now())){
+                sala.setReserva(null);
+                salaRepository.save(sala);
+            }else {
+                throw new RuntimeException("Ja existe outra reserva anexada com essa sala, está locada até: " + reserva.getDataFinal());
+            }
+
+        }
+
         if (sala == null){
             throw new NullPointerException("O id da sala informado não existe ");
         }
@@ -45,7 +57,6 @@ public class ReservaService {
         }catch (RuntimeException e){
             throw new RuntimeException(e.getMessage());
         }
-
 
     }
 
