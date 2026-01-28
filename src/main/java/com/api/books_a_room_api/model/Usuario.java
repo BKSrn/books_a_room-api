@@ -12,11 +12,13 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String nome;
+    @Column(unique = true)
     private String email;
     private String senha;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Reserva> reservas;
 
     public Usuario() {

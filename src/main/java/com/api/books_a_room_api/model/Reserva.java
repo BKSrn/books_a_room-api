@@ -14,11 +14,12 @@ public class Reserva {
     private Long id;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
+
     @Enumerated(EnumType.STRING)
     private Status status;
     @OneToOne
     private Sala sala;
-    @ManyToOne
+    @ManyToOne()
     private Usuario usuario;
 
     public Reserva() {

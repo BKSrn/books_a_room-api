@@ -10,10 +10,12 @@ public class Sala {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String nome;
     private Integer capacidade;
     private Boolean ativo;
-    @OneToOne
+
+    @OneToOne()
     private Reserva reserva;
 
     public Sala(Integer capacidade, String nome) {

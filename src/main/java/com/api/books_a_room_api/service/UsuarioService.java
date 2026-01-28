@@ -88,6 +88,9 @@ public class UsuarioService {
         }
 
         List<Reserva> reservasDoUsuario = usuario.getReservas();
+        if (reservasDoUsuario.size() > 4 ){
+            throw new RuntimeException("Usuario ja atingiu o limite de reservas em seu nome");
+        }
         reservasDoUsuario.add(reserva);
         usuario.setReservas(reservasDoUsuario);
         usuario.atualizarDadosBasicos(dto);
