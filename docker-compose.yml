@@ -1,0 +1,35 @@
+version: '1.0'
+
+services:
+  backend:
+    build: .
+    container_name: books_a_room-backend
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER_LOCAL: postgres
+      DB_PASSWORD_LOCAL: 2006
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - public_network
+      - private_network
+
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: books_a_room-db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-books}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    networks:
+      - private_network
+
+networks:
+  public_network:
+    driver: bridge
+  private_network:
+    driver: bridge
