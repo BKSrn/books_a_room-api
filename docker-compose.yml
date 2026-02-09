@@ -1,6 +1,7 @@
 version: '1.0'
 
 services:
+
   backend:
     build: .
     container_name: books_a_room-backend
@@ -22,9 +23,9 @@ services:
     image: bitnami/postgresql:latest
     container_name: books_a_room-db
     environment:
-      POSTGRES_DB: ${DB_NAME:-books}
-      POSTGRES_USER: ${DB_USER:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: books
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2006
     networks:
       - private_network
 
